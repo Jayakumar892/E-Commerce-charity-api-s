@@ -1,25 +1,23 @@
 const express = require("express")
 const app = express()
+app.use(express.json());
 const mongoose = require("mongoose")
 require("dotenv").config()
 const port = process.env.PORT || 8080
-
-
-
+const url = process.env.MONGO_URL
+const userRoutes=require("./routes/user")
 
 function connectToMongoDB() {
     try {
-        console.log("connected to the database✅");
-        mongoose.connect("mongodb://localhost:27017/E_commerce_charity")
-
+        
+        mongoose.connect(url)
+    console.log("connected to the database✅");
     } catch (err) {
         console.log(err);
 
     }
 }
-
-
-
+app.use("/api/users",userRoutes);
 
 
 app.get("/", (req, res) => {
