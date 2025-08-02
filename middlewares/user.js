@@ -25,7 +25,7 @@ const userFieldValidations = [
 
 
 const userFieldValidationsLogin = [
-  body("loginId")
+  body("loginid")
     .notEmpty()
     .withMessage("Email or Mobile is required"),
 

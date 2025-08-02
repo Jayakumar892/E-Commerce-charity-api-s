@@ -2,14 +2,12 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config()
- const jwt_key = process.env.JWT_SECRET; 
+ const jwt_key = process.env.JWT_SECRET_KEY; 
 
 async function register(req, res) {
     try {
         const { name, email, mobile, password, role } = req.body;
         console.log(req.body);
-
-
         const existingUser = await User.findOne({ $or: [{ email }, { mobile }], });
         console.log(existingUser);
 
@@ -49,9 +47,9 @@ async function register(req, res) {
 
 async function login(req, res) {
     try {
-        const { loginId,password } = req.body;
-        email=loginId
-        mobile=loginId
+        const { loginid,password } = req.body;
+        email=loginid
+        mobile=loginid
         const user = await User.findOne({
             $or: [{ email }, { mobile }],
         });
@@ -74,6 +72,8 @@ async function login(req, res) {
             });
         }
         const token = jwt.sign({ user_id: user._id, email: user.email },jwt_key, { expiresIn: "1h" });
+        console.log(token);
+        
         res.cookie("token", token, {
             httpOnly: true,
             sameSite: "strict",
@@ -82,7 +82,8 @@ async function login(req, res) {
 
         return res.status(200).json({
             status: "Success",
-            message: "Login successful"
+            message: "Login successful",
+            token:token
         });
 
     } catch (err) {
