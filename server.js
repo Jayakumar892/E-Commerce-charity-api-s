@@ -12,6 +12,7 @@ const port = process.env.PORT || 8080
 const url = process.env.MONGO_URL
 const userRoutes=require("./routes/user")
 const categoryRouter=require("./routes/category")
+const charityRouter=require("./routes/charity")
 
 function connectToMongoDB() {
     try {
@@ -24,6 +25,7 @@ function connectToMongoDB() {
 }
 app.use("/api/v1/category",categoryRouter)
 app.use("/api/v1/users",userRoutes);
+app.use("/api/v1/charity",charityRouter)
 
 
 app.get("/", (req, res) => {
