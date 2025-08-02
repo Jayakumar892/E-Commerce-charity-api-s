@@ -27,7 +27,7 @@ function uploadImage(req, res, next) {
                     message: "Only .png, .jpg and .jpeg formats are allowed!"
                 })
             }
-            if (req.file.size > 2 * 1024 * 1024) {
+            if (req.file.size > 1* 1024 * 1024) {
                 return res.status(400).json({
                     status: "Failed",
                     message: "Image file should not exceed 2MB",

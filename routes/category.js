@@ -6,7 +6,7 @@ const { categoryValidationSchema, validateCategory } = require("../middlewares/v
 const { createCategory,
     getAllCategories,
     getAdminCategories,
-    updateCategory } = require("../controllers/createCategory");
+    updateCategory} = require("../controllers/createCategory");
 
 
 router.post( "/create", authenticateUser, uploadImage, categoryValidationSchema, validateCategory, createCategory);
