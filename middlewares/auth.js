@@ -9,6 +9,8 @@ async function authenticateUser(req,res,next){
     try{
         // console.log(User);
         let token = req.headers["authorization"].split(" ")[1]
+        console.log(token);
+        
         // let token = req.headers["authorization"]
         // console.log(token);
         
@@ -36,7 +38,7 @@ async function authenticateUser(req,res,next){
         next();
     }catch(err){
         console.log(err);
-        
+    
         return res.status(500).json({
             status:"Failed",
             message:"Authentication failed"

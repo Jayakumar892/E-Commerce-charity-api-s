@@ -1,14 +1,12 @@
 const { body, validationResult } = require("express-validator");
 
 const charityValidationSchema = [
-    body("description")
-        .notEmpty().withMessage("Description is required")
-        .isLength({ min: 30, max: 100 }).withMessage("Description must be between 30 and 100 characters"),
-
     body("name")
         .notEmpty().withMessage("Charity name is required")
         .isAlpha("en-US", { ignore: " " }).withMessage("Name must contain only alphabets and spaces"),
-
+    body("description")
+        .notEmpty().withMessage("Description is required")
+        .isLength({ min: 30, max: 100 }).withMessage("Description must be between 30 and 100 characters"),
     body("charity_email")
         .notEmpty().withMessage("Charity email is required")
         .isEmail().withMessage("Invalid email format"),

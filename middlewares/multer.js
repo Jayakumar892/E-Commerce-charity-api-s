@@ -35,9 +35,14 @@ function uploadImage(req, res, next) {
             }
             next();
         } catch (error) {
+            // console.log("Error in multer middleware:");
+            
+            // console.log(error);
+            
             return res.status(500).json({
                 status: "Failed",
-                message: error.message
+                message: "Internal server error",
+                error: error.message
             })
         }
     })
