@@ -2,8 +2,6 @@ const express = require("express")
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose")
 require("dotenv").config()
-
-
 const app = express()
 app.use(express.json());
 app.use(cookieParser());
@@ -13,6 +11,7 @@ const url = process.env.MONGO_URL
 const userRoutes=require("./routes/user")
 const categoryRouter=require("./routes/category")
 const charityRouter=require("./routes/charity")
+const productRouter = require("./routes/products");
 
 function connectToMongoDB() {
     try {
@@ -26,6 +25,7 @@ function connectToMongoDB() {
 app.use("/api/v1/category",categoryRouter)
 app.use("/api/v1/users",userRoutes);
 app.use("/api/v1/charity",charityRouter)
+app.use("/api/v1/products", productRouter);
 
 
 app.get("/", (req, res) => {

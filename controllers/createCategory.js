@@ -10,7 +10,14 @@ async function createCategory(req, res) {
     try {
         const { title } = req.body;
         // console.log(req.body);
-        
+        const existingCategory = await Category.findOne({ title: title.trim() });
+        if (existingCategory) {
+            return res.status(400).json({
+                status: "Failed",
+                message: "Category with this title already exists",
+            });
+        }
+
         if (!allowedRoles.includes(req.user.role)) {
             return res.status(403).json({
                 status: "Failed",
@@ -55,9 +62,9 @@ async function createCategory(req, res) {
 
     } catch (err) {
         res.status(500).json({
-             status: "Failed",
-              message: err.message 
-            });
+            status: "Failed",
+            message: err.message
+        });
     }
 }
 
@@ -123,7 +130,7 @@ async function updateCategory(req, res) {
         }
         const isOwner = category.user_id.toString() === req.user._id.toString();
         // console.log(category.user_id);
-        
+
         const isSuperAdmin = req.user.role === "super-admin";
 
         if (!isOwner && !isSuperAdmin) {
