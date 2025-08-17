@@ -21,9 +21,9 @@ async function createProduct(req, res) {
     } = req.body;
 
     const user = req.user;
-     const existingProduct = await Product.findOne({ title: title.trim() });
+    const existingProduct = await Product.findOne({ title: title.trim() });
 
-     if (existingProduct) {
+    if (existingProduct) {
       return res.status(400).json({
         status: "Failed",
         message: "Product already exists with this title",
@@ -113,8 +113,8 @@ async function createProduct(req, res) {
 async function getAllProducts(req, res) {
   try {
     const products = await Product.find();
-    console.log(products);
-    
+   
+
     res.status(200).json({
       status: "Success",
       results: products.length,
@@ -194,7 +194,7 @@ async function getProductsByCharityPublic(req, res) {
   try {
     const { id: charity_id } = req.params;
 
-    const products = await Product.find({ charity_id }); // Only active products are public
+    const products = await Product.find({ charity_id }); 
 
     res.status(200).json({
       status: "Success",
@@ -235,7 +235,7 @@ async function updateProductStatus(req, res) {
     const user = req.user;
     const { status } = req.body;
     console.log(status);
-    
+
 
     const product = await Product.findById(id);
     if (!product) {
@@ -277,7 +277,7 @@ async function updateProduct(req, res) {
     console.log("User:", user);
     console.log(req.body);
 
-   
+
     const product = await Product.findById(productId);
     if (!product) {
       return res.status(404).json({ status: "Failed", message: "Product not found" });
@@ -291,7 +291,7 @@ async function updateProduct(req, res) {
       return res.status(403).json({ status: "Failed", message: "You are not the owner of this product" });
     }
 
-   
+
     let imageURL = product.image;
     if (req.file) {
       if (!req.file.buffer) {
@@ -305,8 +305,7 @@ async function updateProduct(req, res) {
       }
       imageURL = await uploadToCloudinary(req.file.buffer);
     }
-
-    // Build dynamic update fields
+    
     const updateFields = {};
     if (title !== undefined) updateFields.title = title;
     if (short_description !== undefined) updateFields.short_description = short_description;
@@ -319,7 +318,7 @@ async function updateProduct(req, res) {
     if (status !== undefined) updateFields.status = status;
     if (imageURL) updateFields.image = imageURL;
 
-  
+
     const updatedProduct = await Product.findByIdAndUpdate(productId, updateFields, { new: true });
 
     return res.status(200).json({
