@@ -13,6 +13,7 @@ const categoryRouter=require("./routes/category")
 const charityRouter=require("./routes/charity")
 const productRouter = require("./routes/products");
 const addressRouter = require("./routes/address");
+const orderRouter=require("./routes/order")
 
 function connectToMongoDB() {
     try {
@@ -28,6 +29,7 @@ app.use("/api/v1/users",userRoutes);
 app.use("/api/v1/charity",charityRouter)
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/address", addressRouter);
+app.use("/api/v1/order",orderRouter)
 
 
 app.get("/", (req, res) => {

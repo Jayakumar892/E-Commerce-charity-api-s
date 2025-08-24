@@ -13,7 +13,7 @@ async function createAddress(req, res) {
     }
 
     const { location, city, pincode, state, country } = req.body;
-    // console.log(location);
+   
     
 
     const newAddress = await Address.create({
